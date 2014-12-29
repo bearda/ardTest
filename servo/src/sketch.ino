@@ -1,46 +1,28 @@
-#include <Keypad.h>
-#define ledpin 13
-
-const byte ROWS = 4; // Four rows
-const byte COLS = 3; // Three columns
-// Define the Keymap
-char keys[ROWS][COLS] = {
-    {'1','2','3'},
-    {'4','5','6'},
-    {'7','8','9'},
-    {'#','0','*'}
-};
-// Connect keypad ROW0, ROW1, ROW2 and ROW3 to these Arduino pins.
-byte rowPins[ROWS] = { 9, 8, 7, 6 };
-// Connect keypad COL0, COL1 and COL2 to these Arduino pins.
-byte colPins[COLS] = { 12, 11, 10 }; 
-
-// Create the Keypad
-Keypad kpd = Keypad( makeKeymap(keys), rowPins, colPins, ROWS, COLS );
-
+/*
+Adafruit Arduino - Lesson 14. Sweep
+*/
+ 
+#include <Servo.h>
+ 
+int servoPin = 9;
+Servo servo;
+int angle = 0; // servo position in degrees
 void setup()
 {
-  pinMode(ledpin,OUTPUT);
-  digitalWrite(ledpin, HIGH);
-  Serial.begin(9600);
+    servo.attach(servoPin);
 }
-
 void loop()
 {
-  char key = kpd.getKey();
-  if(key)  // Check for a valid key.
-  {
-    switch (key)
+    // scan from 0 to 180 degrees
+    for(angle = 0; angle < 90; angle++)
     {
-      case '*':
-        digitalWrite(ledpin, LOW);
-        break;
-      case '#':
-        digitalWrite(ledpin, HIGH);
-        break;
-      default:
-        Serial.println(key);
-        Serial.println(key);
+        servo.write(angle);
+        delay(15);
     }
-  }
-}
+    // now scan back from 180 to 0 degrees
+    for(angle = 90; angle > 0; angle--)
+    {
+        servo.write(angle);
+        delay(15);
+    }
+} 
