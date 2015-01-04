@@ -1,4 +1,9 @@
+#include <Arduino.h>
 #include <Keypad.h>
+void setup();
+void loop();
+#line 1 "src/sketch.ino"
+//#include <Keypad.h>
 #define ledpin 13
 
 const byte ROWS = 4; // Four rows
